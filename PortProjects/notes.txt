@@ -1,2 +1,46 @@
 This is the general breakdown of the don't procrasinate app.
+Procrasinot
 
+
+This application is going to be an app that will have:
+4? sections:
+    1. section will be a Timer that shows the time left
+            will include control rights for user over timer (pause/unpause/cancel)
+    2. section will have an add timer button:
+         when pressed:
+            bring up a popup that will have a couple diffferent kinds timers
+    3. section will have a history of the timers and if the timers were succedul or not so that users can see
+        their progress. (during one sitting or have users login for total timers)
+
+
+    ADD NEW TIMER:
+        1.have title "ADD NEW TIMER"
+        2. short "des" for some of the timers or "Create your own personalized timer"
+
+    TIMER Popup:
+        1. create OBJECT that stores (timer : name: "name", description: "des", time: "2:00")
+        2. create METHOD that allows user to create personalized timer.object and add it to the library.
+        3. Create OBJECT2 that stores (tunes: name, src for tune)
+        3. create a popup that will display in 34 parts: 
+            1. timer.name 
+            2. description 
+            3. time 
+            4. toggle button for list that displays tunes.name and plays the tune when pressed,
+            allow user to pick 2 (one for completeion and one for failure) and save it into a tune.variable
+
+    TIME section:
+        1. have the timer counting down continously
+        2. create a pause/unpause button
+        3. create a cancel button
+        4. once timer runs out create a popup
+            1. popup will ask "Were you productive in this session?" with yes/no buttons with values
+            2. if "yes" play "completion tune.variable" : play "failure tune.variable"
+            3. Add this history to the history section.
+
+    HISTORY SECTION:
+        1. create two part.
+        2. First part would be fir the title
+        3. second part includes history of timers used
+        4. each element in history will be a rectangle with the name displayed and an icon at the end 
+            either a completeion icon or failure icon. Once pressed:
+                show the written description of timer and write failure/completed next to icon
