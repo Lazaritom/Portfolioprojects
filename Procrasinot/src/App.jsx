@@ -9,6 +9,7 @@ export default function App() {
   return (
     <>
       <h1>Procrasinot</h1>
+      <div className="container">hello world hcigga chigga</div>
     </>
   )
 }
