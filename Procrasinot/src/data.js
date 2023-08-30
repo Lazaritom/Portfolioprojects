@@ -12,4 +12,4 @@ export const Timer2 = {
     "repeat": 2,
     "goal": "Best study timer for periods of 2-2.5 hours. For every 1 hour of studying, you get 15 minutes to allow your brain to rest and the knowledge to solidify in your memory."
 }
-export const Timer = (name, time, brek, repeat, Goal) => { return { name: name, time: time, break: brek, repeat: repeat, goal: Goal } }
+export const Session = (name, time, brek, repeat, Goal) => { return { name: name, time: time, break: brek, repeat: repeat, goal: Goal } }

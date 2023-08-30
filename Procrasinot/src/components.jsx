@@ -1,5 +1,4 @@
 import './App.css'
-import {Timer1, Timer2, Timer} from './data'
 import { Component } from 'react'
 
 export default function TimerChoice({name, goal, time}) {
@@ -10,4 +9,8 @@ export default function TimerChoice({name, goal, time}) {
             <p>TIME: {time}</p>
         </div>
     )
+}
+
+export function Timer() {
+    
 }
