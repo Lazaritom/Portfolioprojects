@@ -1,16 +1,13 @@
 import './App.css'
 import {Timer1, Timer2, Timer} from './data'
+import { Component } from 'react'
 
-const args = [Timer1, Timer2, Timer];
-
-export default function TimerChoice() {
-    for (item in args) {
-
-    }
+export default function TimerChoice({name, goal, time}) {
     return (
-        <>
-            <h1>name</h1>
-            <blockquote>des</blockquote>
-        </>
+        <div className="border border-primary">
+            <h4>{name}</h4>
+            <blockquote>{goal}</blockquote>
+            <p>TIME: {time}</p>
+        </div>
     )
 }
