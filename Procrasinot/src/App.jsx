@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css'
+import {Timer1, Timer2, Timer} from './data'
+
 
 
 export default function App() {
