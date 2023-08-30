@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
-
+import 'bootstrap/dist/css/bootstrap.css'
+import './App'
 export default function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
     <>
-      <h1>Procrasinot</h1>
-      <div className="container">hello world hcigga chigga</div>
+    <h1 className='text-center'>Procrasinot</h1>
+      <div className="container border border-secondary row center">
+        <div className="container border border-primary col-lg">shcisa</div>
+        <div className='container border border-success col-lg'>asfjahs</div>
+        <div className='container border border-success col-lg'>asfjasfjsa</div>
+      </div>
     </>
   )
 }
