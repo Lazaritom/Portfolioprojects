@@ -10,46 +10,57 @@ export default function TimerChoice({name, goal, time}) {
         </div>
     )
 }
-// NEEDS A FIX> DOESN"T WORK DONT FORGET FIX FIX FIX
-export const Timer = (time) => {
-    const [hours, setHours] = useState(0);
-    const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState(0);
+
+export const TimerCountDown = ({ targetTimeInSeconds }) => {
+    const [remainingTime, setRemainingTime] = useState(targetTimeInSeconds);
+    const [isPaused, setIsPaused] = useState(false);
   
-    const TotalMinutes = 50; // Set the time in minutes
+    const calcTime = (remainingTimeInSeconds) => {
+      const hours = Math.floor(remainingTimeInSeconds / 3600);
+      const minutes = Math.floor((remainingTimeInSeconds % 3600) / 60);
+      const seconds = remainingTimeInSeconds % 60;
   
-    const calcTime = (remainingTime) => {
-      const remainingSeconds = Math.floor((remainingTime / 1000) % 60);
-      const remainingMinutes = Math.floor((remainingTime / 1000 / 60) % 60);
-      const remainingHours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
-  
-      setHours(remainingHours);
-      setMinutes(remainingMinutes);
-      setSeconds(remainingSeconds);
+      return { hours, minutes, seconds };
     };
   
     useEffect(() => {
-      const TimerInterval = setInterval(() => {
-        const now = Date.now();
-        const endTime = now + (TotalMinutes * 60 * 1000); // Calculate the end time in milliseconds
+      let timerInterval;
   
-        if (now < endTime) {
-          const remainingTime = endTime - now;
-          calcTime(remainingTime);
-        } else {
-          clearInterval(TimerInterval);
-          setHours(0);
-          setMinutes(0);
-          setSeconds(0);
-        }
+      {/*if (remainingTime > 0) {
+        timerInterval = setInterval(() => {
+          setRemainingTime((prevTime) => prevTime - 1);
+        }, 1000);
+      }
+  
+      return () => {
+        clearInterval(timerInterval);
+      };
+    }, [remainingTime]);*/}
+
+    if (!isPaused && remainingTime > 0) {
+      timerInterval = setInterval(() => {
+        setRemainingTime((prevTime) => prevTime - 1);
       }, 1000);
+    }
+
+    return () => {
+      clearInterval(timerInterval);
+    };
+  }, [remainingTime, isPaused]);
   
-      return () => clearInterval(TimerInterval); // Cleanup of interval after unmounting
-    }, [TotalMinutes]);
+    const { hours, minutes, seconds } = calcTime(remainingTime);
   
+    const togglePause = () => {
+      setIsPaused((prevIsPaused) => !prevIsPaused);
+    };
+
     return (
       <div className="timer">
-           <h1>{hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}</h1>
+        <h1>
+          {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+        </h1>
+        <button onClick={togglePause}>{isPaused ? 'Unpause' : 'Pause'}</button>
       </div>
     );
   };
+  

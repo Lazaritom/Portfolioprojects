@@ -2,7 +2,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css'
-import TimerChoice,{Timer} from './Components'
+import TimerChoice,{TimerCountDown} from './Components'
 import { Timer1, Timer2, Session } from './data'
 
 export default function App() {
@@ -19,7 +19,8 @@ export default function App() {
           </div>
           <div className='container border border-success col-lg '>
             <h1>Timer</h1>
-            <Timer />
+            <TimerCountDown targetTimeInSeconds={1800} />
+            {console.log(Timer1.time * 60)}
           </div>
           <div className='container border border-success col-lg '>
             <h1>History</h1>
