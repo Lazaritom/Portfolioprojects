@@ -44,3 +44,18 @@ This application is going to be an app that will have:
         4. each element in history will be a rectangle with the name displayed and an icon at the end 
             either a completeion icon or failure icon. Once pressed:
                 show the written description of timer and write failure/completed next to icon
+
+NEXT ON TODO LIST:
+    1. change the add button so that it doesn't cancel the timer in id="timer" div;
+    2. create a cancel button in id="timer" div to delete the timer.object (set val in prev button to false)
+    3. when showComp3 pressed, create a form in the id="timer" div that takes user input 
+    4. create a save button for the form mentioned above
+5. IMPORTANT IMPORTANT
+    change <TimerCountDown /> to take the times from the object in the id="timer" div section and use that values
+6. IMPORTANT IMPORTANT
+    make a popup in <TimerCountDown/> so that when timer = 0, popup that asks if failure(false) or complete(true) and save it.
+
+
+FUTURE THINGS:
+    change the form to accept an array for the times 
+    find how to make the timer use the array of values from the objects so that it does the study, rest, and repeat times
