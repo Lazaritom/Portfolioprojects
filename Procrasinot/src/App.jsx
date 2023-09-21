@@ -11,15 +11,23 @@ export default function App() {
   const [showMyComp2, setShowMyComp2] = useState(false);
   const [showMyComp3, setShowMyComp3] = useState(false);
 
+  const validateTime = (compI) => {
+    if (!(showMyComp1 || showMyComp2 || showMyComp3)) {
+      if (compI === false) {
+      return !(compI);
+      }
+    }
+    return compI;
+  }
   return (
     <>
       <h1 className='text-center'>Procrasinot</h1>
       <div className="container d-flex justify-content-center">
           <div className="container border border-primary col-lg" id="Study_timers">
             <h1>Study Timers</h1>
-            <TimerChoice object={Timer1}/><button onClick={() => setShowMyComp1(!showMyComp1)}>Add this Procrasinoter/Delete this Procrasinoter</button>
-            <TimerChoice object={Timer2}/><button onClick={() => setShowMyComp2(!showMyComp2)}>Add this Procrasinoter/Delete this Procrasinoter</button>
-            <TimerChoice object={Session}/><button onClick={() => setShowMyComp3(!showMyComp3)}>Needs work, doesn't do anything yet. make templete for user</button>
+            <TimerChoice object={Timer1}/><button onClick={() => setShowMyComp1(validateTime)}>Add this Procrasinoter/Delete this Procrasinoter</button>
+            <TimerChoice object={Timer2}/><button onClick={() => setShowMyComp2(validateTime)}>Add this Procrasinoter/Delete this Procrasinoter</button>
+            <TimerChoice object={Session}/><button onClick={() => setShowMyComp3(validateTime)}>Needs work, doesn't do anything yet. make templete for user</button>
             {/*need to create inputs here to save into object */}
           </div>
           <div className='container border border-success col-lg' id="Timer">
