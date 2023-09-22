@@ -58,7 +58,63 @@ export const TimerCountDown = ({ targetTimeInSeconds }) => {
         <h1>
           {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
         </h1> 
-        <button onClick={togglePause}>{control}</button> {/*add an option later that makes button read "start" */}
+        <button onClick={togglePause}>{control}</button> 
       </div>
     );
   };
+
+  //form for personal procrasinotor
+  export const UserTimer = () => {
+    const [userName, setUserName] = useState("");
+    const [userDes, setUserDes] = useState("");
+    const [userTInput, setUserTInput] = useState('');
+    const [userTimes, setUserTimes] = useState([]);
+    const [formSubmitted, setFormSubmitted] = useState(false);
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const nArray = userTInput.split(",").map((item) => item.trim());
+      const validArray = nArray.filter((item) => !isNaN(item)).map((item) => Number(item));
+      setUserTimes(validArray);
+      setFormSubmitted(true);
+    }
+  
+    return (
+      <div className="border border-primary">
+        {!formSubmitted ? (
+          <form onSubmit={handleSubmit}>
+            <label>Fill out the Procrasinotor</label>
+            <input
+              type='text'
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder='Enter name of Procrasinotor'
+            />
+            <label htmlFor='userDes'>Description/Goal</label>
+            <textarea
+              id='userDes'
+              placeholder="Enter the description or goal for this Procrasinotor"
+              value={userDes}
+              onChange={(e) => setUserDes(e.target.value)}
+            />
+            <label htmlFor='userTimes'>Enter your desired (work and break) times (in minutes) separated by a comma</label>
+            <input
+              type='text'
+              id='userTimes'
+              value={userTInput}
+              onChange={(e) => setUserTInput(e.target.value)}
+              placeholder='30,5,30,5'
+            />
+            <button type='submit'>Start Procrasinotor</button>
+          </form>
+        ) : (
+          <div>
+            <h4>Name: {userName}</h4>
+            <blockquote>{userDes}</blockquote>
+            <p>TIMES: {userTimes.join(', ')}</p>
+          </div>
+        )}
+      </div>
+    );
+  }
+  
