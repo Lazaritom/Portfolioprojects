@@ -13,9 +13,10 @@ export default function TimerChoice({ object }) {
 }
 
 //SECOND DIV IN APP
-export const TimerCountDown = ({ targetTimeInSeconds }) => {
-    const [remainingTime, setRemainingTime] = useState(targetTimeInSeconds);
+export const TimerCountDown = ({ targetArray }) => {
+    const [remainingTime, setRemainingTime] = useState(targetArray[0]*60);
     const [isPaused, setIsPaused] = useState(true); //makes sure that timer doesn't start untill user unpauses the timer.
+    const [currentIndex, setCurrentIndex] = useState(0)
   
     const calcTime = (remainingTimeInSeconds) => {
       const hours = Math.floor(remainingTimeInSeconds / 3600);
@@ -30,14 +31,26 @@ export const TimerCountDown = ({ targetTimeInSeconds }) => {
  
     if (!isPaused && remainingTime > 0) {
       timerInterval = setInterval(() => {
-        setRemainingTime((prevTime) => prevTime - 1);
-      }, 1000);
+        setRemainingTime((prevTime) => {
+          if (prevTime > 0) {
+            return prevTime - 1;
+          } else {
+            if (currentIndex < targetArray.length - 1) {
+              setCurrentIndex((prevIndex) => prevIndex + 1);
+              return targetArray[currentIndex + 1] * 60;
+          } else {
+            clearInterval(timerInterval);
+            return 0;
+          }
+        }
+      });
+     }, 1000);
     }
 
     return () => {
       clearInterval(timerInterval);
     };
-  }, [remainingTime, isPaused]);
+  }, [remainingTime, isPaused, currentIndex, targetArray]);
   
     const { hours, minutes, seconds } = calcTime(remainingTime);
   
@@ -46,7 +59,7 @@ export const TimerCountDown = ({ targetTimeInSeconds }) => {
     };
 
     let control = '';
-    if (isPaused && (remainingTime == targetTimeInSeconds)) {
+    if (isPaused && (remainingTime == targetArray[0]*60)) {
       control = "Start";
     } else if (isPaused) {
       control = "Unpause";
@@ -61,7 +74,7 @@ export const TimerCountDown = ({ targetTimeInSeconds }) => {
         <button onClick={togglePause}>{control}</button> 
       </div>
     );
-  };
+  }
 
   //form for personal procrasinotor
   export const UserTimer = () => {

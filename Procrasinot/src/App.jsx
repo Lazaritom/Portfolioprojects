@@ -19,6 +19,7 @@ export default function App() {
     }
     return compI;
   }
+  let arr = [1,2,3];
   
   return (
     <>
@@ -32,7 +33,7 @@ export default function App() {
           </div>
           <div className='container border border-success col-lg' id="Timer">
             <h1>Timer</h1>
-            <TimerCountDown targetTimeInSeconds={1800} />
+            <TimerCountDown targetArray={arr}/>
             {showMyComp1 && (
               <>
                 <TimerChoice object={Timer1} />
