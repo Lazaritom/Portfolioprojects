@@ -14,22 +14,21 @@ export default function TimerChoice({ object }) {
 
 //SECOND DIV IN APP
 export const TimerCountDown = ({ targetArray }) => {
-    const [remainingTime, setRemainingTime] = useState(targetArray[0]*60);
-    const [isPaused, setIsPaused] = useState(true); //makes sure that timer doesn't start untill user unpauses the timer.
-    const [currentIndex, setCurrentIndex] = useState(0)
-  
-    const calcTime = (remainingTimeInSeconds) => {
-      const hours = Math.floor(remainingTimeInSeconds / 3600);
-      const minutes = Math.floor((remainingTimeInSeconds % 3600) / 60);
-      const seconds = remainingTimeInSeconds % 60;
-  
-      return { hours, minutes, seconds };
-    };
-  
-    useEffect(() => {
-      let timerInterval;
- 
-    if (!isPaused && remainingTime > 0) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(targetArray[0] * 60);
+  const [isPaused, setIsPaused] = useState(true);
+
+  const calcTime = (remainingTimeInSeconds) => {
+    const hours = Math.floor(remainingTimeInSeconds / 3600);
+    const minutes = Math.floor((remainingTimeInSeconds % 3600) / 60);
+    const seconds = remainingTimeInSeconds % 60;
+    return { hours, minutes, seconds };
+  };
+
+  useEffect(() => {
+    let timerInterval;
+
+    if (!isPaused) {
       timerInterval = setInterval(() => {
         setRemainingTime((prevTime) => {
           if (prevTime > 0) {
@@ -37,47 +36,50 @@ export const TimerCountDown = ({ targetArray }) => {
           } else {
             if (currentIndex < targetArray.length - 1) {
               setCurrentIndex((prevIndex) => prevIndex + 1);
+              setIsPaused(true);
               return targetArray[currentIndex + 1] * 60;
-          } else {
-            clearInterval(timerInterval);
-            return 0;
+            } else {
+              clearInterval(timerInterval);
+              setIsPaused(true); // Pause the timer when it reaches the end
+              return 0;
+            }
           }
-        }
-      });
-     }, 1000);
+        });
+      }, 1000);
     }
 
     return () => {
       clearInterval(timerInterval);
     };
-  }, [remainingTime, isPaused, currentIndex, targetArray]);
-  
-    const { hours, minutes, seconds } = calcTime(remainingTime);
-  
-    const togglePause = () => {
-      setIsPaused((prevIsPaused) => !prevIsPaused);
-    };
+  }, [isPaused, currentIndex, targetArray]);
 
-    let control = '';
-    if (isPaused && (remainingTime == targetArray[0]*60)) {
-      control = "Start";
-    } else if (isPaused) {
-      control = "Unpause";
-    } else {
-      control = "Pause";
-    }
-    return (
-      <div className="timer"> 
-        <h1>
-          {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
-        </h1> 
-        <button onClick={togglePause}>{control}</button> 
-      </div>
-    );
+  const { hours, minutes, seconds } = calcTime(remainingTime);
+
+  const togglePause = () => {
+    setIsPaused((prevIsPaused) => !prevIsPaused);
+  };
+
+  let control = '';
+  if (isPaused && remainingTime === targetArray[currentIndex] * 60) {
+    control = "Start";
+  } else if (isPaused) {
+    control = "Unpause";
+  } else {
+    control = "Pause";
   }
 
+  return (
+    <div className="timer">
+      <h1>
+        {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+      </h1>
+      <button onClick={togglePause}>{control}</button>
+    </div>
+  );
+};
+
   //form for personal procrasinotor
-  export const UserTimer = () => {
+export const UserTimer = () => {
     const [userName, setUserName] = useState("");
     const [userDes, setUserDes] = useState("");
     const [userTInput, setUserTInput] = useState('');
@@ -92,7 +94,7 @@ export const TimerCountDown = ({ targetArray }) => {
       setFormSubmitted(true);
     }
   
-    return (
+    return ( //displays form to fill out
       <div className="border border-primary">
         {!formSubmitted ? (
           <form onSubmit={handleSubmit}>
@@ -120,8 +122,9 @@ export const TimerCountDown = ({ targetArray }) => {
             />
             <button type='submit'>Start Procrasinotor</button>
           </form>
-        ) : (
-          <div>
+        ) : ( //displays completed user info with the TimerCountDown component
+          <div> 
+            <TimerCountDown targetArray={userTimes}/>
             <h4>Name: {userName}</h4>
             <blockquote>{userDes}</blockquote>
             <p>TIMES: {userTimes.join(', ')}</p>
@@ -129,5 +132,11 @@ export const TimerCountDown = ({ targetArray }) => {
         )}
       </div>
     );
-  }
+}
+  
+const Popup = () => {
+  return (
+    <div className='overlay'>Components</div>
+  )
+}
   
