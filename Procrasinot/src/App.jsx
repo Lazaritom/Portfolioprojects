@@ -19,7 +19,7 @@ export default function App() {
     }
     return compI;
   }
-  let arr = [1,2,3];
+  let arr = [.10,.25,3];
   
   return (
     <>
