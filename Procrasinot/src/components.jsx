@@ -17,6 +17,7 @@ export const TimerCountDown = ({ targetArray }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [remainingTime, setRemainingTime] = useState(targetArray[0] * 60);
   const [isPaused, setIsPaused] = useState(true);
+  const [openPopup, setOpenPopup] = useState(false);
 
   const calcTime = (remainingTimeInSeconds) => {
     const hours = Math.floor(remainingTimeInSeconds / 3600);
@@ -34,6 +35,7 @@ export const TimerCountDown = ({ targetArray }) => {
           if (prevTime > 0) {
             return prevTime - 1;
           } else {
+            setOpenPopup(true);
             if (currentIndex < targetArray.length - 1) {
               setCurrentIndex((prevIndex) => prevIndex + 1);
               setIsPaused(true);
@@ -47,18 +49,18 @@ export const TimerCountDown = ({ targetArray }) => {
         });
       }, 1000);
     }
-
+    
     return () => {
       clearInterval(timerInterval);
     };
   }, [isPaused, currentIndex, targetArray]);
-
+  
   const { hours, minutes, seconds } = calcTime(remainingTime);
-
+  
   const togglePause = () => {
     setIsPaused((prevIsPaused) => !prevIsPaused);
   };
-
+  
   let control = '';
   if (isPaused && remainingTime === targetArray[currentIndex] * 60) {
     control = "Start";
@@ -67,9 +69,10 @@ export const TimerCountDown = ({ targetArray }) => {
   } else {
     control = "Pause";
   }
-
-  return (
+  
+  return ( //temporarly popup here popup needs work.
     <div className="timer">
+      <Popup option={openPopup} onCLose={() => setOpenPopup(false)}/> 
       <h1>
         {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
       </h1>
@@ -134,9 +137,17 @@ export const UserTimer = () => {
     );
 }
   
-const Popup = () => {
+const Popup = ({option, onCLose}) => {
+  if (!option) return null;
   return (
-    <div className='overlay'>Components</div>
+    <div className='overlay'>
+      <div className='container'>
+        <h4>Did you succeed?</h4>
+        <button>Yes</button>
+        <button>No</button> 
+        <button onClick={onCLose}>X</button>
+      </div>
+    </div>
   )
 }
   
